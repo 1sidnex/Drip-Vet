@@ -4,6 +4,8 @@
 
 ##Como executar
 
+Utilização do Supabase para o banco de dados (veriifcar script)
+
 1.É necessário baixar o framwork Quasar para rodar o programa
 
 2.Em seu terminal digite: quasar dev (isso irá redirecioná-la á pagina web)
