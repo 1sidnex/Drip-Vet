@@ -1,5 +1,5 @@
 #Trabalho de GPDS - parte 2 (DripVet - Sistema de Gerencimanto para Clínica Veterinária)
-
+"Commit trivial para reativar o PR"
 ##Como executar
 
 1.É necessário baixar o framwork Quasar para rodar o programa
