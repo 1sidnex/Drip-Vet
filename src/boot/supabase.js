@@ -10,25 +10,31 @@ console.log('🔍 Supabase URL:', supabaseUrl || 'NÃO DEFINIDA')
 console.log('🔍 Supabase Key:', supabaseKey ? 'Carregada' : 'NÃO DEFINIDA')
 
 // Validação para evitar erros silenciosos
+let supabase = null
+
 if (!supabaseUrl || !supabaseKey) {
   console.error('❌ ERRO: Variáveis de ambiente do Supabase não foram carregadas.')
   console.error('Verifique se o arquivo .env está na raiz do projeto (desenvolvimento)')
   console.error(
     'ou se as variáveis VITE_SUPABASE_URL e VITE_SUPABASE_KEY estão configuradas no Netlify (produção)',
   )
+  // Cria um cliente mock para evitar crash, mas não funcionará
+  try {
+    supabase = createClient('https://placeholder.supabase.co', 'placeholder-key')
+  } catch (e) {
+    console.error('Erro ao criar cliente Supabase:', e)
+  }
+} else {
+  // Cria o cliente Supabase normalmente
+  supabase = createClient(supabaseUrl, supabaseKey)
 }
 
-// Cria o cliente Supabase (usa valores vazios se não estiverem definidos para evitar crash)
-// Mas a aplicação não funcionará sem essas variáveis
-const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseKey || 'placeholder-key',
-)
-
-// Mantém o estado global do usuário atualizado
-supabase.auth.onAuthStateChange((event, session) => {
-  user.value = session?.user || null
-})
+// Mantém o estado global do usuário atualizado (apenas se supabase foi criado)
+if (supabase && supabaseUrl && supabaseKey) {
+  supabase.auth.onAuthStateChange((event, session) => {
+    user.value = session?.user || null
+  })
+}
 
 // Exporta como função default para uso como composable
 export default function useSupabase() {
