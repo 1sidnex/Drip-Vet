@@ -6,11 +6,7 @@ export default defineConfig((/* ctx */) => {
   return {
     boot: ['axios'],
     css: ['app.scss'],
-    extras: [
-      'roboto-font',
-      'material-icons',
-      'mdi-v7' 
-    ],
+    extras: ['roboto-font', 'material-icons', 'mdi-v7'],
 
     build: {
       target: {
@@ -21,8 +17,8 @@ export default defineConfig((/* ctx */) => {
       vueRouterMode: 'hash',
 
       env: {
-        SUPABASE_URL: process.env.SUPABASE_URL,
-        SUPABASE_KEY: process.env.SUPABASE_KEY
+        VITE_SUPABASE_URL: process.env.VITE_SUPABASE_URL,
+        VITE_SUPABASE_KEY: process.env.VITE_SUPABASE_KEY,
       },
 
       vitePlugins: [
@@ -41,16 +37,12 @@ export default defineConfig((/* ctx */) => {
 
     devServer: {
       open: true,
-      port: 5010
+      port: 5010,
     },
 
     framework: {
       config: {},
-      plugins: [
-        'Notify',
-        'Dialog',
-        'Loading'
-      ],
+      plugins: ['Notify', 'Dialog', 'Loading'],
     },
 
     animations: [],

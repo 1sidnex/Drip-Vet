@@ -12,13 +12,18 @@ console.log('🔍 Supabase Key:', supabaseKey ? 'Carregada' : 'NÃO DEFINIDA')
 // Validação para evitar erros silenciosos
 if (!supabaseUrl || !supabaseKey) {
   console.error('❌ ERRO: Variáveis de ambiente do Supabase não foram carregadas.')
-  console.error('Verifique se o arquivo .env está na raiz do projeto e contém:')
-  console.error('VITE_SUPABASE_URL e VITE_SUPABASE_KEY')
-  throw new Error('Configuração do Supabase ausente')
+  console.error('Verifique se o arquivo .env está na raiz do projeto (desenvolvimento)')
+  console.error(
+    'ou se as variáveis VITE_SUPABASE_URL e VITE_SUPABASE_KEY estão configuradas no Netlify (produção)',
+  )
 }
 
-// Cria o cliente
-const supabase = createClient(supabaseUrl, supabaseKey)
+// Cria o cliente Supabase (usa valores vazios se não estiverem definidos para evitar crash)
+// Mas a aplicação não funcionará sem essas variáveis
+const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseKey || 'placeholder-key',
+)
 
 // Mantém o estado global do usuário atualizado
 supabase.auth.onAuthStateChange((event, session) => {
