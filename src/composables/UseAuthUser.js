@@ -37,9 +37,9 @@ export default function useAuthUser() {
       email,
       password,
       options: {
-        data: meta // Salva nome, telefone, etc. nos metadados do utilizador
+        data: meta, // Salva nome, telefone, etc. nos metadados do utilizador
         // redirectTo removido pois não vamos depender da confirmação de e-mail no fluxo imediato
-      }
+      },
     })
     if (error) throw error
     // Em alguns casos de configuração do Supabase, o usuário já pode vir logado após o registro.
@@ -59,14 +59,14 @@ export default function useAuthUser() {
 
   const sendPasswordResetEmail = async (email) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/#/reset-password`
+      redirectTo: `${window.location.origin}/#/reset-password`,
     })
     if (error) throw error
   }
 
   const resetPassword = async (newPassword) => {
     const { data, error } = await supabase.auth.updateUser({
-      password: newPassword
+      password: newPassword,
     })
     if (error) throw error
     return data
@@ -81,6 +81,6 @@ export default function useAuthUser() {
     register,
     update,
     sendPasswordResetEmail,
-    resetPassword
+    resetPassword,
   }
 }
